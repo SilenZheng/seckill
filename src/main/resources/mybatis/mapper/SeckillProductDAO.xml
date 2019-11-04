@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.silen.seckill.dao.SeckillProductDAO">
+  <resultMap id="BaseResultMap" type="com.silen.seckill.entity.SeckillProduct">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="product_number" jdbcType="VARCHAR" property="productNumber" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="product_detail" jdbcType="VARCHAR" property="productDetail" />
+    <result column="market_price" jdbcType="DECIMAL" property="marketPrice" />
+    <result column="preferential_price" jdbcType="DECIMAL" property="preferentialPrice" />
+    <result column="discounted_price" jdbcType="DECIMAL" property="discountedPrice" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="repertory" jdbcType="INTEGER" property="repertory" />
+    <result column="sales_volume" jdbcType="INTEGER" property="salesVolume" />
+    <result column="show_start_time" jdbcType="TIMESTAMP" property="showStartTime" />
+    <result column="end_start_time" jdbcType="TIMESTAMP" property="endStartTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="delete_flag" jdbcType="SMALLINT" property="deleteFlag" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, product_number, product_name, product_detail, market_price, preferential_price, 
+    discounted_price, image, repertory, sales_volume, show_start_time, end_start_time, 
+    create_time, update_time, delete_flag
+  </sql>
+  <select id="selectByExample" parameterType="com.silen.seckill.entity.SeckillProductExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from seckill_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from seckill_product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from seckill_product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.silen.seckill.entity.SeckillProductExample">
+    delete from seckill_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.silen.seckill.entity.SeckillProduct">
+    insert into seckill_product (id, product_number, product_name, 
+      product_detail, market_price, preferential_price, 
+      discounted_price, image, repertory, 
+      sales_volume, show_start_time, end_start_time, 
+      create_time, update_time, delete_flag
+      )
+    values (#{id,jdbcType=INTEGER}, #{productNumber,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, 
+      #{productDetail,jdbcType=VARCHAR}, #{marketPrice,jdbcType=DECIMAL}, #{preferentialPrice,jdbcType=DECIMAL}, 
+      #{discountedPrice,jdbcType=DECIMAL}, #{image,jdbcType=VARCHAR}, #{repertory,jdbcType=INTEGER}, 
+      #{salesVolume,jdbcType=INTEGER}, #{showStartTime,jdbcType=TIMESTAMP}, #{endStartTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=SMALLINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.silen.seckill.entity.SeckillProduct">
+    insert into seckill_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="productNumber != null">
+        product_number,
+      </if>
+      <if test="productName != null">
+        product_name,
+      </if>
+      <if test="productDetail != null">
+        product_detail,
+      </if>
+      <if test="marketPrice != null">
+        market_price,
+      </if>
+      <if test="preferentialPrice != null">
+        preferential_price,
+      </if>
+      <if test="discountedPrice != null">
+        discounted_price,
+      </if>
+      <if test="image != null">
+        image,
+      </if>
+      <if test="repertory != null">
+        repertory,
+      </if>
+      <if test="salesVolume != null">
+        sales_volume,
+      </if>
+      <if test="showStartTime != null">
+        show_start_time,
+      </if>
+      <if test="endStartTime != null">
+        end_start_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleteFlag != null">
+        delete_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="productNumber != null">
+        #{productNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productDetail != null">
+        #{productDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="marketPrice != null">
+        #{marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="preferentialPrice != null">
+        #{preferentialPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="discountedPrice != null">
+        #{discountedPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="image != null">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="repertory != null">
+        #{repertory,jdbcType=INTEGER},
+      </if>
+      <if test="salesVolume != null">
+        #{salesVolume,jdbcType=INTEGER},
+      </if>
+      <if test="showStartTime != null">
+        #{showStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endStartTime != null">
+        #{endStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null">
+        #{deleteFlag,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.silen.seckill.entity.SeckillProductExample" resultType="java.lang.Long">
+    select count(*) from seckill_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update seckill_product
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.productNumber != null">
+        product_number = #{record.productNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productName != null">
+        product_name = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productDetail != null">
+        product_detail = #{record.productDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.marketPrice != null">
+        market_price = #{record.marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.preferentialPrice != null">
+        preferential_price = #{record.preferentialPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.discountedPrice != null">
+        discounted_price = #{record.discountedPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.image != null">
+        image = #{record.image,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repertory != null">
+        repertory = #{record.repertory,jdbcType=INTEGER},
+      </if>
+      <if test="record.salesVolume != null">
+        sales_volume = #{record.salesVolume,jdbcType=INTEGER},
+      </if>
+      <if test="record.showStartTime != null">
+        show_start_time = #{record.showStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endStartTime != null">
+        end_start_time = #{record.endStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deleteFlag != null">
+        delete_flag = #{record.deleteFlag,jdbcType=SMALLINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update seckill_product
+    set id = #{record.id,jdbcType=INTEGER},
+      product_number = #{record.productNumber,jdbcType=VARCHAR},
+      product_name = #{record.productName,jdbcType=VARCHAR},
+      product_detail = #{record.productDetail,jdbcType=VARCHAR},
+      market_price = #{record.marketPrice,jdbcType=DECIMAL},
+      preferential_price = #{record.preferentialPrice,jdbcType=DECIMAL},
+      discounted_price = #{record.discountedPrice,jdbcType=DECIMAL},
+      image = #{record.image,jdbcType=VARCHAR},
+      repertory = #{record.repertory,jdbcType=INTEGER},
+      sales_volume = #{record.salesVolume,jdbcType=INTEGER},
+      show_start_time = #{record.showStartTime,jdbcType=TIMESTAMP},
+      end_start_time = #{record.endStartTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      delete_flag = #{record.deleteFlag,jdbcType=SMALLINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.silen.seckill.entity.SeckillProduct">
+    update seckill_product
+    <set>
+      <if test="productNumber != null">
+        product_number = #{productNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productDetail != null">
+        product_detail = #{productDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="marketPrice != null">
+        market_price = #{marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="preferentialPrice != null">
+        preferential_price = #{preferentialPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="discountedPrice != null">
+        discounted_price = #{discountedPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="image != null">
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="repertory != null">
+        repertory = #{repertory,jdbcType=INTEGER},
+      </if>
+      <if test="salesVolume != null">
+        sales_volume = #{salesVolume,jdbcType=INTEGER},
+      </if>
+      <if test="showStartTime != null">
+        show_start_time = #{showStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endStartTime != null">
+        end_start_time = #{endStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null">
+        delete_flag = #{deleteFlag,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.silen.seckill.entity.SeckillProduct">
+    update seckill_product
+    set product_number = #{productNumber,jdbcType=VARCHAR},
+      product_name = #{productName,jdbcType=VARCHAR},
+      product_detail = #{productDetail,jdbcType=VARCHAR},
+      market_price = #{marketPrice,jdbcType=DECIMAL},
+      preferential_price = #{preferentialPrice,jdbcType=DECIMAL},
+      discounted_price = #{discountedPrice,jdbcType=DECIMAL},
+      image = #{image,jdbcType=VARCHAR},
+      repertory = #{repertory,jdbcType=INTEGER},
+      sales_volume = #{salesVolume,jdbcType=INTEGER},
+      show_start_time = #{showStartTime,jdbcType=TIMESTAMP},
+      end_start_time = #{endStartTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      delete_flag = #{deleteFlag,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
