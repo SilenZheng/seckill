@@ -30,6 +30,7 @@ public class OrderController {
         return orderService.createOrder(productId);
     }
 
+    @RequestMapping
     public void print(){
         System.out.println("分支修改01");
     }
