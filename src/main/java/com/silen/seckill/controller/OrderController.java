@@ -30,4 +30,8 @@ public class OrderController {
         return orderService.createOrder(productId);
     }
 
+    public void print(){
+        System.out.println("分支修改01");
+    }
+
 }
